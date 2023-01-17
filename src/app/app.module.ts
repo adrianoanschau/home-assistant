@@ -3,8 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JsonapiModule } from 'nest-jsonapi';
 import { AdminJsModule } from '../admin-js/admin-js.module';
-import configuration from '../config';
-import { IncomeEntity, UserEntity } from '../database/entities';
+import { EstimatedIncomeEntity, UserEntity } from '../database/entities';
 import { DatabaseModule } from '../database/database.module';
 
 const ENV = process.env.NODE_ENV;
@@ -14,12 +13,17 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-      load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: (config: ConfigService) => ({
-        ...config.get('database'),
-        entities: [UserEntity, IncomeEntity],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        // entities: [UserEntity, EstimatedIncomeEntity],
+        autoLoadEntities: true,
       }),
       inject: [ConfigService],
     }),
@@ -27,7 +31,7 @@ const ENV = process.env.NODE_ENV;
       mountPoint: '/api',
     }),
     DatabaseModule,
-    AdminJsModule,
+    // AdminJsModule,
   ],
 })
 export class AppModule {}

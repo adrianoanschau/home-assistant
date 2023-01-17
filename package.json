@@ -17,7 +17,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:run": "npm run typeorm -- -d ./typeorm.config.ts migration:run",
+    "migration:generate": "npm run typeorm -- -d ./typeorm.config.ts migration:generate ./migrations/$npm_config_name",
+    "migration:create": "npm run typeorm -- migration:create ./migrations/$npm_config_name",
+    "migration:revert": "npm run typeorm -- -d ./typeorm.config.ts migration:revert"
   },
   "dependencies": {
     "@adminjs/express": "^5.0.1",
@@ -35,6 +40,7 @@
     "cross-env": "^7.0.3",
     "discord.js": "^14.7.1",
     "dot-object": "^2.1.4",
+    "dotenv": "^16.0.3",
     "express-formidable": "^1.2.0",
     "express-session": "^1.17.3",
     "google-spreadsheet": "^3.3.0",

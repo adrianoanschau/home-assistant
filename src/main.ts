@@ -8,8 +8,10 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.setGlobalPrefix('/api');
   app.enableShutdownHooks();
+
   const logger = new Logger('Bootstrap');
   const port = process.env.PORT || 3000;
+
   await app.listen(port);
   logger.log(`API is up and running on port ${port}`);
 }

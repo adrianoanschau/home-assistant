@@ -2,19 +2,19 @@ import { Controller, Get, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JsonapiInterceptor, JsonapiPayload } from 'nest-jsonapi';
 import { Repository } from 'typeorm';
-import { IncomeEntity } from '../../entities';
+import { EstimatedIncomeEntity } from '../../entities';
 
 @UseInterceptors(JsonapiInterceptor)
-@Controller('incomes')
-export class IncomesController {
+@Controller('estimated_incomes')
+export class EstimatedIncomesController {
   constructor(
-    @InjectRepository(IncomeEntity)
-    private readonly incomesRepository: Repository<IncomeEntity>,
+    @InjectRepository(EstimatedIncomeEntity)
+    private readonly incomesRepository: Repository<EstimatedIncomeEntity>,
   ) {}
 
-  @JsonapiPayload({ resource: 'incomes' })
+  @JsonapiPayload({ resource: 'estimated_incomes' })
   @Get()
-  public async findIncomes(): Promise<IncomeEntity[]> {
+  public async findIncomes(): Promise<EstimatedIncomeEntity[]> {
     return this.incomesRepository.find();
   }
 }

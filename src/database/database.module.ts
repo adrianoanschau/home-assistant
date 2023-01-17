@@ -12,13 +12,13 @@ import {
   JSONAPI_MODULE_SERVICE,
   SchemaBuilder,
 } from 'nest-jsonapi';
-import { IncomesController } from './controllers/users/incomes.controller';
+import { EstimatedIncomesController } from './controllers/users/incomes.controller';
 import { UsersController } from './controllers/users/users.controller';
-import { IncomeEntity, UserEntity } from './entities';
+import { EstimatedIncomeEntity, UserEntity } from './entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, IncomeEntity])],
-  controllers: [UsersController, IncomesController],
+  imports: [TypeOrmModule.forFeature([UserEntity, EstimatedIncomeEntity])],
+  controllers: [UsersController, EstimatedIncomesController],
 })
 export class DatabaseModule implements NestModule, OnModuleInit {
   constructor(
@@ -29,11 +29,13 @@ export class DatabaseModule implements NestModule, OnModuleInit {
   public configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(JsonapiMiddleware)
-      .forRoutes(UsersController, IncomesController);
+      .forRoutes(UsersController, EstimatedIncomesController);
   }
 
   public async onModuleInit(): Promise<void> {
     this.jsonapiService.register(new SchemaBuilder<UserEntity>('users'));
-    this.jsonapiService.register(new SchemaBuilder<IncomeEntity>('incomes'));
+    this.jsonapiService.register(
+      new SchemaBuilder<EstimatedIncomeEntity>('estimated_incomes'),
+    );
   }
 }
