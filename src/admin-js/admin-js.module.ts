@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { AdminModule as NestAdminModule } from '@adminjs/nestjs';
 import * as AdminJSTypeORM from '@adminjs/typeorm';
 import AdminJS from 'adminjs';
-import { EstimatedIncomeEntity, UserEntity } from '../database/entities';
+import {
+  EntryEntity,
+  EstimatedEntryEntity,
+  UserEntity,
+} from '../database/entities';
 
 AdminJS.registerAdapter({
   Resource: AdminJSTypeORM.Resource,
@@ -27,7 +31,7 @@ const authenticate = async (email: string, password: string) => {
       useFactory: () => ({
         adminJsOptions: {
           rootPath: '/admin',
-          resources: [UserEntity, EstimatedIncomeEntity],
+          resources: [EntryEntity, EstimatedEntryEntity, UserEntity],
         },
         auth: {
           authenticate,

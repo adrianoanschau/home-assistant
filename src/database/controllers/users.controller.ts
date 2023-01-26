@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsOptional, IsString } from 'class-validator';
 import { JsonapiInterceptor, JsonapiPayload } from 'nest-jsonapi';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../../entities';
+import { UserEntity } from '../entities';
 
 class FindOptions {
   @IsString()

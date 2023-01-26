@@ -1,2 +1,3 @@
-export * from './estimated-income.entity';
+export * from './entry.entity';
+export * from './estimated-entry.entity';
 export * from './user.entity';
